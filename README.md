@@ -96,13 +96,13 @@ Skriv minst en enhetstest. Enhetstester er ikke Team API sin sterkeste side.
 Lag en GitHub actions workflow som ved hver *push* mot ```origin/main``` branch gjør følgende ved hjelp av Maven, og pom.xml filen som ligger i dette repoet.
 
 * [x] Kjører enhetstester
-* [x]Kompilerer koden
-* [x]Bygger artifakt (JAR)
+* [x] Kompilerer koden
+* [x] Bygger artifakt (JAR)
 
 Sensor vil
 
-* Brekke testen med vilje, og se at pipelinen feiler.
-* Forsøke å pushe kode som ikke kompilerer til main.
+* [x] Brekke testen med vilje, og se at pipelinen feiler.
+* [x] Forsøke å pushe kode som ikke kompilerer til main.
 
 ## Oppgave - Feedback
 
@@ -120,7 +120,7 @@ Et av de største problemene er de lange, og lite konsekvente responstidene.
 Gjør nødvendige endringer i Spring Boot applikasjonen, slik at den produserer metrics med Micrometer rammeverket og leverer disse til Influx DB på lokal maskin.
 
 * Legg til kode som registrerer målepunkter i applikasjonen, slik at dere kan bevise med fakta hva som forårsaker de dårlige responstidene.
-* Det ønskelig å måle hvor ofte APIet faktisk kaster "BackEndException"
+* [x] Det ønskelig å måle hvor ofte APIet faktisk kaster "BackEndException"
 * Dere kan anta at sensor kjører InfluxDB på sin maskin.
 * Sensor vil gjøre flere kall mot endepunktene i applikasjonen med for eksempel Curl eller Postman  
 

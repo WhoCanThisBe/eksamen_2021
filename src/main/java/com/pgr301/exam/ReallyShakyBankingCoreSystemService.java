@@ -2,12 +2,14 @@ package com.pgr301.exam;
 
 import com.pgr301.exam.model.Account;
 import com.pgr301.exam.model.Transaction;
+import io.micrometer.core.instrument.Metrics;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import static java.math.BigDecimal.valueOf;
@@ -56,7 +58,9 @@ class ReallyShakyBankingCoreSystemService implements BankingCoreSystmeService {
 
     @Override
     public Account getAccount(String accountNumber) {
+        long start = System.currentTimeMillis();
         randomizedWait(5000);
+        Metrics.timer("getAccountServiceDuration", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
         randomizeExceptionOrPanic(0.9f, 0.5f);
         return getOrCreateAccount(accountNumber);
     }
