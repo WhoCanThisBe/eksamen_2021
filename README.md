@@ -95,9 +95,9 @@ SkalBank har bestemt seg for å bruke DevOps som underliggende prinsipp for all 
 Skriv minst en enhetstest. Enhetstester er ikke Team API sin sterkeste side.
 Lag en GitHub actions workflow som ved hver *push* mot ```origin/main``` branch gjør følgende ved hjelp av Maven, og pom.xml filen som ligger i dette repoet.
 
-* Kjører enhetstester
-* Kompilerer koden
-* Bygger artifakt (JAR)
+* [x] Kjører enhetstester
+* [x]Kompilerer koden
+* [x]Bygger artifakt (JAR)
 
 Sensor vil
 
