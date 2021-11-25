@@ -11,13 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./path/to/dir
-   steps:
-      - uses: hashicorp/setup-terraform@v1
-      - name: Terraform Format
-        run: terraform fmt -check
+        working-directory: 'infra'
+    steps:
+      - uses: actions/checkout@v2 # Checks out git repository
+      - uses: hashicorp/setup-terraform@v1 # Some handy function for terraform? https://github.com/hashicorp/setup-terraform
       - name: Terraform init
         run: terraform init
+      - name: Terraform validate
+        run: terraform validate
       - name: Terraform plan
         if: github.event_name == 'pull_request'
         run: terraform plan
