@@ -29,9 +29,7 @@ jobs:
       - name: Terraform plan
         if: github.event_name == 'pull_request'
         run: terraform plan
-        continue-on-error: true
 
-
-      - name: Terraform apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approves
+      #- name: Terraform apply
+       # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        #run: terraform apply -auto-approves
