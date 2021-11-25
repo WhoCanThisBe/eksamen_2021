@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./path/to/dir
+        working-directory: 'infra'
    steps:
       - uses: hashicorp/setup-terraform@v1
       - name: Terraform Format
