@@ -32,13 +32,18 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
     @Timed("Controller Transfer")
     @PostMapping(path = "/account/{fromAccount}/transfer/{toAccount}", consumes = "application/json", produces = "application/json")
     public void transfer(@RequestBody Transaction tx, @PathVariable String fromAccount, @PathVariable String toAccount) {
+        long start = System.currentTimeMillis();
         bankService.transfer(tx, fromAccount, toAccount);
+        Metrics.timer("TransferController", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
+
     }
 
     @Timed("Controller UpdateAccount")
     @PostMapping(path = "/account", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Account> updateAccount(@RequestBody Account a) {
+        long start = System.currentTimeMillis();
         bankService.updateAccount(a);
+        Metrics.timer("UpdateAccountController", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
         return new ResponseEntity<>(a, HttpStatus.OK);
     }
 
@@ -46,8 +51,8 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
     @GetMapping(path = "/account/{accountId}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Account> balance(@PathVariable String accountId) {
         long start = System.currentTimeMillis();
-        Metrics.timer("ControllerServiceDuration", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
         Account account = ofNullable(bankService.getAccount(accountId)).orElseThrow(AccountNotFoundException::new);
+        Metrics.timer("ControllerServiceDuration", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
