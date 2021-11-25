@@ -13,7 +13,8 @@ jobs:
       run:
         working-directory: 'infra'
     steps:
-      - uses: hashicorp/setup-terraform@v1
+      - uses: actions/checkout@v2 # Checks out git repository
+      - uses: hashicorp/setup-terraform@v1 # Some handy function for terraform? https://github.com/hashicorp/setup-terraform
       - name: Terraform Format
         run: terraform fmt -check
       - name: Terraform init
