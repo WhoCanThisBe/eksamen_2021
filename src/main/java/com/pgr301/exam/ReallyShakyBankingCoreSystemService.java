@@ -58,9 +58,7 @@ class ReallyShakyBankingCoreSystemService implements BankingCoreSystmeService {
 
     @Override
     public Account getAccount(String accountNumber) {
-        long start = System.currentTimeMillis();
         randomizedWait(5000);
-        Metrics.timer("getAccountServiceDuration", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
         randomizeExceptionOrPanic(0.9f, 0.5f);
         return getOrCreateAccount(accountNumber);
     }
