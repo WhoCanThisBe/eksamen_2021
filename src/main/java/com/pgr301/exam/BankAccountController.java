@@ -28,40 +28,46 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
     private BankingCoreSystmeService bankService;
 
 
+    @Autowired
+    private MeterRegistry meterRegistry;
 
-    @Timed("Controller Transfer")
+    @Autowired
+    public BankAccountController(MeterRegistry meterRegistry) {
+        this.meterRegistry = meterRegistry;
+    }
+
+    private int counter;
+
+
     @PostMapping(path = "/account/{fromAccount}/transfer/{toAccount}", consumes = "application/json", produces = "application/json")
     public void transfer(@RequestBody Transaction tx, @PathVariable String fromAccount, @PathVariable String toAccount) {
         long start = System.currentTimeMillis();
         bankService.transfer(tx, fromAccount, toAccount);
-        Metrics.timer("TransferController", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
+        meterRegistry.timer("post_transfer", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
 
     }
 
-    @Timed("Controller UpdateAccount")
     @PostMapping(path = "/account", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Account> updateAccount(@RequestBody Account a) {
         long start = System.currentTimeMillis();
         bankService.updateAccount(a);
-        Metrics.timer("UpdateAccountController", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
+        meterRegistry.timer("postAccount", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
         return new ResponseEntity<>(a, HttpStatus.OK);
     }
 
-    @Timed("Controller balance")
+
     @GetMapping(path = "/account/{accountId}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Account> balance(@PathVariable String accountId) {
         long start = System.currentTimeMillis();
+        meterRegistry.timer("getAccount", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
         Account account = ofNullable(bankService.getAccount(accountId)).orElseThrow(AccountNotFoundException::new);
-        Metrics.timer("ControllerServiceDuration", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
-    @Timed("Controller onApplicationEvent")
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
     }
 
-    @Timed("Controller AccountNotFoundException")
     @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "video not found")
     public static class AccountNotFoundException extends RuntimeException {
     }
