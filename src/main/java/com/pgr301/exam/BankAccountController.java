@@ -36,8 +36,6 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
         this.meterRegistry = meterRegistry;
     }
 
-    private int counter;
-
 
     @PostMapping(path = "/account/{fromAccount}/transfer/{toAccount}", consumes = "application/json", produces = "application/json")
     public void transfer(@RequestBody Transaction tx, @PathVariable String fromAccount, @PathVariable String toAccount) {
@@ -61,6 +59,7 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
         long start = System.currentTimeMillis();
         meterRegistry.timer("getAccount", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
         Account account = ofNullable(bankService.getAccount(accountId)).orElseThrow(AccountNotFoundException::new);
+
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
