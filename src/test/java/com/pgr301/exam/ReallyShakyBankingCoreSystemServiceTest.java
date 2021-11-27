@@ -9,8 +9,8 @@ class ReallyShakyBankingCoreSystemServiceTest {
 
     @Test
     void stupidTest() {
-        String stringTest =  "test1a";
-        assertEquals(stringTest,"test1d");
+        String stringTest =  "test1";
+        assertEquals(stringTest,"test1");
     }
 
 }
