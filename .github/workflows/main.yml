@@ -7,10 +7,10 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
 
 jobs:
   build:
+    name: CICD
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
