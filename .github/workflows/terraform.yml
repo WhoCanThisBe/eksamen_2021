@@ -3,6 +3,8 @@ name: Terraform ci
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'infra/**'
   pull_request:
     branches: [ main ]
 
