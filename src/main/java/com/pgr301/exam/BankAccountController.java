@@ -27,40 +27,56 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
 
 
 
-
+    @Timed("postTransfer")
     @PostMapping(path = "/account/{fromAccount}/transfer/{toAccount}", consumes = "application/json", produces = "application/json")
     public void transfer(@RequestBody Transaction tx, @PathVariable String fromAccount, @PathVariable String toAccount) {
         long start = System.currentTimeMillis();
-        bankService.transfer(tx, fromAccount, toAccount);
-        Metrics.timer("post_transfer", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
+//        bankService.transfer(tx, fromAccount, toAccount);
+//        Metrics.timer("postTransferTimer", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
+        try{
+            bankService.transfer(tx, fromAccount, toAccount);
+            Metrics.timer("postTransferTimer", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
+        }catch (BackEndException b){
+            Metrics.timer("postAccountTimer", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
+            throw new BackEndException();
+        }
 
     }
-    @Timed("Pal2")
+    @Timed("postAccount")
     @PostMapping(path = "/account", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Account> updateAccount(@RequestBody Account a) {
         long start = System.currentTimeMillis();
-        bankService.updateAccount(a);
-        Metrics.timer("postAccount", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
-        return new ResponseEntity<>(a, HttpStatus.OK);
+        //bankService.updateAccount(a);
+       // Metrics.timer("postAccountTimer", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
+        //return new ResponseEntity<>(a, HttpStatus.OK);
+
+        try{
+            bankService.updateAccount(a);
+            Metrics.timer("postAccountTimer", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
+            return new ResponseEntity<>(a, HttpStatus.OK);
+        }catch (BackEndException b){
+            Metrics.timer("postAccountTimer", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
+            throw new BackEndException();
+        }
     }
 
-    @Timed("pal")
+    @Timed("getAccount")
     @GetMapping(path = "/account/{accountId}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Account> balance(@PathVariable String accountId) {
         long start = System.currentTimeMillis();
-        Account account = ofNullable(bankService.getAccount(accountId)).orElseThrow(AccountNotFoundException::new);
-        Metrics.timer("getAccountas", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
-        return new ResponseEntity<>(account, HttpStatus.OK);
+        //Account account = ofNullable(bankService.getAccount(accountId)).orElseThrow(AccountNotFoundException::new);
+        //Metrics.timer("getAccountTimer", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
+       // return new ResponseEntity<>(account, HttpStatus.OK);
 
-//
-//        try{
-//            Account account = ofNullable(bankService.getAccount(accountId)).orElseThrow(AccountNotFoundException::new);
-//            Metrics.timer("getAccount", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
-//            return new ResponseEntity<>(account, HttpStatus.OK);
-//        }catch (BackEndException b){
-//            Metrics.timer("getAccount", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
-//            throw new BackEndException();
-//        }
+
+        try{
+            Account account = ofNullable(bankService.getAccount(accountId)).orElseThrow(AccountNotFoundException::new);
+            Metrics.timer("getAccountTimer", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
+            return new ResponseEntity<>(account, HttpStatus.OK);
+        }catch (BackEndException b){
+            Metrics.timer("getAccountTimer", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
+            throw new BackEndException();
+        }
 
     }
 
