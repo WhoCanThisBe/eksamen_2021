@@ -126,7 +126,7 @@ Dette finner du i aws kontoen.
 
 ![img_9.png](img_9.png)
 
-I terraform.yml endrer du slik at de er din aws den pusher til 
+I Docker.yml endrer du slik at de er din aws den pusher til 
 
 ![img_10.png](img_10.png)
 
