@@ -1,3 +1,5 @@
+### Besvarelse i egen readme fil : sjekk Readmebesvarelse.md
+
 [![Java CI with Maven](https://github.com/WhoCanThisBe/eksamen_2021/actions/workflows/main.yml/badge.svg)](https://github.com/WhoCanThisBe/eksamen_2021/actions/workflows/main.yml)
 
 [![Terraform ci](https://github.com/WhoCanThisBe/eksamen_2021/actions/workflows/terraform.yml/badge.svg)](https://github.com/WhoCanThisBe/eksamen_2021/actions/workflows/terraform.yml)
