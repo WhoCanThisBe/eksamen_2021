@@ -37,7 +37,7 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
             bankService.transfer(tx, fromAccount, toAccount);
             Metrics.timer("postTransferTimer", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
         }catch (BackEndException b){
-            Metrics.timer("postAccountTimer", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
+            Metrics.timer("postTransferTimer", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
             throw new BackEndException();
         }
 
