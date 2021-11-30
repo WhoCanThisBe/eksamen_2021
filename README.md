@@ -209,10 +209,10 @@ ECR (Elastic Container Reigstry) brukes for å lagre Docker container images. Vi
 
 ### Terraform i Pipeline
 
-* Implementer en workflow med GitHub actions som kjører ```Terraform init & apply``` for hver endring av kode i _main_ branch.
-* Implementer en workflow med GitHub actions som kjører ```Terraform init & plan``` for hver pull request som lages mot main branch slik at de som gjør en code review kan se hva konsekvensen av å godta endringen vil være.
-* Pipeline skal feile dersom Terraformkode som pushes til main ikke er riktig formatert.
-* Pipeline skal bare kjøre dersom det er endringer in *ifra/* katalogen.
+* [x] Implementer en workflow med GitHub actions som kjører ```Terraform init & apply``` for hver endring av kode i _main_ branch.
+* [x] Implementer en workflow med GitHub actions som kjører ```Terraform init & plan``` for hver pull request som lages mot main branch slik at de som gjør en code review kan se hva konsekvensen av å godta endringen vil være.
+* [x] Pipeline skal feile dersom Terraformkode som pushes til main ikke er riktig formatert.
+* [x] Pipeline skal bare kjøre dersom det er endringer in *ifra/* katalogen.
 
 Sensor vil å lage en fork av ditt repo
 
@@ -269,9 +269,9 @@ docker .....
 
 Lag en GitHub Actions workflow som bygger et Docker image av Spring Boot applikasjonen.
 
-* GitHub Workflowen skal kjøres ved hver push til _main_ branch.
-* Hvert Container image skal ha en unik tag som identifiserer hvilken commit i GitHub som ble brukt som grunnlag for å bygge container image.
-* Container image skal pushes til ECR repository som ble laget i Terraform oppgaven.
+* [x] GitHub Workflowen skal kjøres ved hver push til _main_ branch.
+* [x]Hvert Container image skal ha en unik tag som identifiserer hvilken commit i GitHub som ble brukt som grunnlag for å bygge container image.
+* [x]Container image skal pushes til ECR repository som ble laget i Terraform oppgaven.
 * Hvis du ikke har fått til Terraform oppgaven, kan du lage et ECR repository manuelt via AWS console (UI), og du får ikke poengtrekk i denne oppgaven dersom du gjør dette.
 
 Lykke til og ha det moro!
