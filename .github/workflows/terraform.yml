@@ -69,6 +69,7 @@ jobs:
 
       - name: Terraform apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        working-directory: infra
         run: terraform apply -auto-approve
 
   push_to_registry:
