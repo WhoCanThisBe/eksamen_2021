@@ -25,8 +25,6 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
     @Autowired
     private BankingCoreSystmeService bankService;
 
-
-
     @Timed("postTransfer")
     @PostMapping(path = "/account/{fromAccount}/transfer/{toAccount}", consumes = "application/json", produces = "application/json")
     public void transfer(@RequestBody Transaction tx, @PathVariable String fromAccount, @PathVariable String toAccount) {
@@ -40,8 +38,8 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
             Metrics.timer("postTransferTimer", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
             throw new BackEndException();
         }
-
     }
+
     @Timed("postAccount")
     @PostMapping(path = "/account", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Account> updateAccount(@RequestBody Account a) {
@@ -63,7 +61,7 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
     @Timed("getAccount")
     @GetMapping(path = "/account/{accountId}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Account> balance(@PathVariable String accountId) {
-        long start = System.currentTimeMillis();
+        long start = System.sdsdfsdf
         //Account account = ofNullable(bankService.getAccount(accountId)).orElseThrow(AccountNotFoundException::new);
         //Metrics.timer("getAccountTimer", "duration", String.valueOf(valueOf(System.currentTimeMillis()-start))).record(System.currentTimeMillis()-start, TimeUnit.MILLISECONDS);
        // return new ResponseEntity<>(account, HttpStatus.OK);
